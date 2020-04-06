@@ -83,14 +83,19 @@ class GraphObject:
         """
         return self.numpyMatrix
     
-    def showGraph(self):
+    def showGraph(self, saveFig = True):
         """[Shows the graph using networkx]
+        
+        Keyword Arguments:
+            saveFig {bool} -- [saves the graph] (default: {True})
         """
+        
         if self.graph is None:
             print("Error: No graph is currently generated. Returning.")
         elif self.typeOfGraph == "UnDirected":
             gr = nx.from_numpy_matrix(self.numpyMatrix)
             nx.draw(gr, node_size=500, labels=self.labels, with_labels=True, directed=True)
+            plt.savefig('graph.png')
             plt.show()
         elif self.typeOfGraph == "Directed":
             G = nx.from_numpy_matrix(self.numpyMatrix, create_using=nx.MultiDiGraph())
@@ -98,6 +103,7 @@ class GraphObject:
             nx.draw_circular(G)
             labels = {i : i + 1 for i in G.nodes()}
             nx.draw_networkx_labels(G, pos, labels, font_size=15)
+            plt.savefig('graph.png')
             plt.show()
         else:
             print("Error: Incorrect type of graph.")
