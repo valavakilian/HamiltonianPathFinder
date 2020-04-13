@@ -116,7 +116,91 @@ class SolveHamiltonian:
 
         # print("->", self.backtrackingList)
         return
+
     
+    def hamiltonianDP(self, graphList):
+
+        n = len(graphList)
+        for index in range(0,n):
+            graphList[index][index] = 1
+        
+        dp = []
+        for i in range(0,n):
+            row = []
+            for j in range(0,2**n):
+                row.append(False)  
+            dp.append(row)
+        
+        for i in range(0, n):
+            dp[i][2 ** i] = True
+
+        for i in range(0, 2 ** n):
+            for j in range(0, n):
+                iBitform = bin(i)[2:].zfill(n)
+                if iBitform[j]:
+                    for k in range(0,n):
+                        if j != k and iBitform[k] and graphList[k][j] == 1 and dp[k][i ^ 2 ** j] == True:
+                            dp[j][i] = True
+                            break
+        
+        for m in dp:
+            print(m)
+
+        for i in range(0, n):
+            if dp[i][2 ** n - 1] == True:
+                return True
+
+        return False
+
+
+    def hamiltonianDPV2(self, graphList):
+
+        # graphList = [[0,1,1,0],
+        #              [1,0,1,1],
+        #              [1,1,0,1],
+        #              [0,1,1,1]]
+
+        n = len(graphList)
+        for index in range(0,n):
+            graphList[index][index] = 1
+        
+        dp = []
+        for node_index in range(0,n):
+            dp_for_node = []
+            for i in range(0,n):
+                row = []
+                for j in range(0,2**n):
+                    row.append(0)  
+                dp_for_node.append(row)
+            dp.append(dp_for_node)
+        
+        for i in range(0, n):
+            dp[i][i][2 ** i] = 1
+
+
+        for table in dp:
+            for i in range(0, 2 ** n):
+                for j in range(0, n):
+                    iBitform = bin(i)[2:].zfill(n)
+                    if iBitform[j]:
+                        for k in range(0,n):
+                            if j != k and iBitform[k] and graphList[k][j] == 1 and table[k][i ^ 2 ** j] == 1:
+                                table[j][i] += table[k][i ^ 2 ** j]
+                                break
+        
+        for table_index in range(0,len(dp)):
+            table = dp[table_index]
+            # print(" ->" + "Table " + str(table_index))
+            for m in table:
+                print(m)
+
+        # for i in range(0, n):
+        #     if dp[i][2 ** n - 1] == True:
+        #         return True
+
+        return False
+
+
     def printPaths(self):
         """[Prints the hamiltonian paths]
         """
