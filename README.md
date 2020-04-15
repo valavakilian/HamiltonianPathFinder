@@ -5,6 +5,8 @@ To run these examples run the runExample python function (it uses python 3 and s
 
 Requirements can be installed with command "pip3 install -r requirements.txt" . Please use a virtual environment if you prefer to keep a seperate run environment.
 
+![Image description](graph.png)
+
 Why Python? Well python is slow however it does have a series of great librares for making graphs nad printing them. 
 
 Currently we use V2 HamiltonianSolver which is slightly faster than the previous version.
