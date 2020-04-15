@@ -1,8 +1,8 @@
 import numpy as np
-import GenerateGraphs
 import Graph
 import networkx as nx 
 import matplotlib.pyplot as plt
+import time
 
 class SolveHamiltonian:
     """[Hamiltonian Solver]
@@ -27,8 +27,7 @@ class SolveHamiltonian:
         self.backtrackingList = []
         self.startIndex = None
         self.endIndex = None
-        self.listOfPaths = None
-        self.finalHamiltonianPaths = None
+        self.listOfPaths = []
         return
 
     def findHamiltonianPaths(self, graph, startIndex, endIndex):
@@ -45,10 +44,6 @@ class SolveHamiltonian:
             print("Error: start or end indices are out of range.")
             return
 
-
-        # Adding the new dynamic programming part
-        self.memoDict = {}
-
         self.startIndex = startIndex
         self.endIndex = endIndex
         self.backtrackingList = [0] * self.N
@@ -59,7 +54,6 @@ class SolveHamiltonian:
         self.graph = graph
         self.listOfPaths = []
         self.hamiltonian(currentVertex)
-        self.printPaths()
 
         return
     
@@ -82,7 +76,8 @@ class SolveHamiltonian:
                 return
             if currentVertex == self.N - 1:
                 if self.backtrackingList[-1] == self.endIndex:
-                    print(self.backtrackingList[0:self.N])
+                    # Uncomment to see backtracking
+                    # print(self.backtrackingList[0:self.N])
                     self.listOfPaths.append(self.backtrackingList[0:self.N])
             else:
                 self.hamiltonian(currentVertex + 1)
@@ -98,9 +93,9 @@ class SolveHamiltonian:
             self.backtrackingList[currentVertex] = (self.backtrackingList[currentVertex] + 1) % (self.N + 1)
 
             if (self.backtrackingList[currentVertex] == 0):
+                # To see the backtracking, uncomment these parts
                 # print("Our 0 point is at vertex : ", currentVertex)
-                print("Backtracking list is : ", self.backtrackingList)
-                # input()
+                # print("Backtracking list is : ", self.backtrackingList)
                 return
             
             if (self.graph[ self.backtrackingList[currentVertex - 1] - 1 ][ self.backtrackingList[currentVertex] - 1 ] != 0):
@@ -111,15 +106,20 @@ class SolveHamiltonian:
                     j += 1
 
                 if j == currentVertex and (currentVertex < self.N) or ( (currentVertex == self.N) and ( self.graph[ self.backtrackingList[self.N] - 1][ self.backtrackingList[0] - 1] != 0 ) ):
+                    # To see the backtracking, uncomment these parts
                     # print("->", self.backtrackingList)
                     return
 
+        # To see the backtracking, uncomment these parts
         # print("->", self.backtrackingList)
         return
     
     def printPaths(self):
         """[Prints the hamiltonian paths]
         """
+        print("Total number of existing hamiltonian paths are : ")
+        print(len(self.listOfPaths))
+        time.sleep(3)
         print("List of Hamiltonian Paths from index " + str(self.startIndex) + " to index " + str(self.endIndex) + " are:" )
         for path in self.listOfPaths:
             pathString = ""

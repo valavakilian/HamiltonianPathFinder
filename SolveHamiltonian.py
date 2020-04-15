@@ -1,5 +1,4 @@
 import numpy as np
-import GenerateGraphs
 import Graph
 import networkx as nx 
 import matplotlib.pyplot as plt
@@ -44,7 +43,7 @@ class SolveHamiltonian:
         self.endIndex = endIndex
         self.backtrackingList = [0] * self.N
 
-        # Crazy parts
+        # Optimization parts
         self.backtrackingList[0] = self.startIndex
         self.backtrackingList[1] = 0
         currentVertex = 1
@@ -53,7 +52,8 @@ class SolveHamiltonian:
         self.listOfCycles = []
         self.hamiltonian(currentVertex)
         self.finalHamiltonianPaths = self.findGoodPaths()
-        print(self.finalHamiltonianPaths)
+        # print(self.finalHamiltonianPaths)
+
         return
     
     def hamiltonian(self, currentVertex):
@@ -68,19 +68,9 @@ class SolveHamiltonian:
         while True:
             self.nextVertex(currentVertex)
 
-            # This is my odd thingy
-            # if self.backtrackingList[0] != self.startIndex:
-            #     print("HERE: ", self.backtrackingList[0])
-            #     return
-
             if self.backtrackingList[currentVertex] == 0:
-                print("Exiting Here")
                 return
             if currentVertex == self.N - 1:
-                print("final")
-                print(self.backtrackingList[0:self.N])
-                print("________________________________")
-                input()
                 self.listOfCycles.append(self.backtrackingList[0:self.N])
             else:
                 self.hamiltonian(currentVertex + 1)
@@ -95,10 +85,9 @@ class SolveHamiltonian:
         while True:
             self.backtrackingList[currentVertex] = (self.backtrackingList[currentVertex] + 1) % (self.N + 1)
 
-            print(self.backtrackingList)
+            # print(self.backtrackingList)
 
             if (self.backtrackingList[currentVertex] == 0):
-                print("Exiting Here flag 1")
                 return
             
             
@@ -111,15 +100,12 @@ class SolveHamiltonian:
 
                 if j == currentVertex:
                     if (currentVertex < self.N) or ( (currentVertex == self.N) and ( self.graph[ self.backtrackingList[self.N] - 1][ self.backtrackingList[0] - 1] != 0 ) ):
-                    # if (currentVertex < self.N):
-                        print("Exiting here flag 2 ")
                         return
-        print("Exiting in this bulshit")
         return
     
 
     def findGoodPaths(self):
-        """[summary]
+        """[Prints the paths]
         
         Returns:
             [type] -- [description]
@@ -133,25 +119,3 @@ class SolveHamiltonian:
 
         return finalPaths
 
-
-
-graph = Graph.GraphObject(5,15,"Directed")
-# print(graph.getListAdjacencyMatrix())
-graph.showGraph()
-graphList = graph.getListAdjacencyMatrix()
-
-solver = SolveHamiltonian()
-# graphList = [[0,1,1,0,1],
-#             [1,0,1,1,1],
-#             [1,1,0,1,0],
-#             [0,1,1,0,1],
-#             [1,1,0,1,0]]
-# graphList[1][2] = 1
-# graphList[2][1] = 1
-
-# graphList = [[0, 1, 1, 1, 1], [1, 0, 1, 1, 1], [1, 1, 0, 0, 1], [1, 1, 0, 0, 0], [1, 1, 1, 0, 0]]
-for x in graphList:
-    print(x)
-input()
-
-solver.findHamiltonianPaths(graphList, 4, 5)

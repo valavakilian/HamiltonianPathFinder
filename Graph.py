@@ -29,7 +29,6 @@ class GraphObject:
             typeOfGraph {[str]} -- [string indicating the type of graph Directed/UnDirected]
 
         """
-
         self.numberOfEdges = numOfEdges
         self.numberOfNodes = numOfNodes
         self.typeOfGraph = typeOfGraph
