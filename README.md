@@ -7,7 +7,7 @@ Requirements can be installed with command "pip3 install -r requirements.txt" . 
 
 ![Image description](graph.png)
 
-Why Python? Well python is slow however it does have a series of great librares for making graphs nad printing them. 
+Why Python? Well python is slower than C++; however, it does have a series of great librares for making graphs and showing them. 
 
 Currently we use V2 HamiltonianSolver which is slightly faster than the previous version.
 
