@@ -10,9 +10,10 @@ continue_commands = "y"
 
 
 while continue_commands == "y":
+
     print("<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>")
 
-    
+
     if new_graph == "y":
         n = int(input("Enter number of nodes please : "))
         e = int(input("Enter number of edges please : "))
@@ -35,7 +36,8 @@ while continue_commands == "y":
         solver.printPaths()
     
     continue_commands = input("Would you like to continue ? (enter y for yes, anything else for no): ")
-    new_graph = input("Would you like to make a new graph ? (enter y for yes, anything else for no): ")
-    new_start_end = input("Would you like to have a new start or end? (enter y for yes, anything else for no): ")
+    if continue_commands == "y":    
+        new_graph = input("Would you like to make a new graph ? (enter y for yes, anything else for no): ")
+        new_start_end = input("Would you like to have a new start or end? (enter y for yes, anything else for no): ")
 
 print("Thank you. ")
